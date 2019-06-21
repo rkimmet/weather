@@ -1,15 +1,17 @@
 import requests
 import datetime
 class getWeather():
-    params={'id':5188843,'appid':'1906cf72b3ad7716e9954c02b39eac6d','units':'imperial'}
+    params={'id':5188843,'units':'imperial'}
 
     #initialize the array
-    def __init__(self):
+    def __init__(self,appid):
         self.array={'min':0,'max':0}
+        self.params['appid']=appid
         self.weathercode=[]
         self.abnormal=[]
     #grabs the weather data from the open weather api **future implementation** add feature to add own city by ID?
     def getreq(self):
+#        print(self.params)
         r=requests.get("https://api.openweathermap.org/data/2.5/forecast",params=self.params)
         if(r.status_code!=requests.codes.ok):
             print(r.status_code)
@@ -18,13 +20,13 @@ class getWeather():
             s=r.json()
             Name=s['city']['name']
             today=s['list']
-           # print(today[1])
+#           print(today[1])
             return today
     #takes the weather and parses he next weather for the next day grabbing the minimun and maximum tempurature
     def parseweather(self,weather):
         day=datetime.datetime.today()
         for part in weather:
-            print((part))
+#            print((part))
             if int(part['dt_txt'][5:7])==day.month:
                 if int(part['dt_txt'][8:10])==day.day:
                     continue
@@ -72,9 +74,4 @@ class getWeather():
         else:
             ab=''.join(self.abnormal)
             text=text+'abnormal weather such as '+ab
-        print(text)
-weather=getWeather()
-forcast=weather.getreq()
-weather.parseweather(forcast)
-weather.getcode()
-weather.createtext()
+        return(text)
