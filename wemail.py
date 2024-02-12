@@ -1,19 +1,18 @@
-import emaill,weather
+import SendEmail,weather
 
 def main():
-        data=open('keys','r').readlines()
+        data=open('keys.txt','r').readlines()
         sdata=[]
         for x in data:
             sdata.append(x.rstrip('\n'))
 #        print(sdata)
-        weathr=weather.getWeather(sdata[0])
+        weathr=weather.getWeather()
         forcast=weathr.getreq()
-        weathr.parseweather(forcast)
         weathr.getcode()
         text=weathr.createtext()
-        password=sdata[1]
-        eserver=emaill.emaill(text,password,sdata[2])
+        password=sdata[0]
+        eserver=SendEmail.SendEmail(text,password,sdata[1])
 #        print('ok')
-        eserver.sendmsg()
+        #eserver.sendmsg()
 
 main()
