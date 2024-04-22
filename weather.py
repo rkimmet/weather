@@ -1,7 +1,7 @@
 import requests
 import datetime
 class getWeather():
-    params={'id':5188843,'units':'imperial'}
+    params={'q':'Indianapolis','units':'imperial'}
 
     #initialize the array
     def __init__(self,appid):
@@ -9,10 +9,10 @@ class getWeather():
         self.params['appid']=appid
         self.weathercode=[]
         self.abnormal=[]
-    #grabs the weather data from the open weather api **future implementation** add feature to add own city by ID?
+    #grabs the weather data from the NWS
     def getreq(self):
 #        print(self.params)
-        r=requests.get("https://api.openweathermap.org/data/2.5/forecast",params=self.params)
+        r=requests.get("https://api.weather.gov",params=self.params)
         if(r.status_code!=requests.codes.ok):
             print(r.status_code)
             print("something went wrong")
@@ -63,10 +63,12 @@ class getWeather():
     def getcode(self):
         for x in self.weathercode:
             if x['id']<800:
-                self.abnormal.extend(x['description'])
+                if x['description'] not in self.abnormal:
+                    print(self.abnormal)
+                    self.abnormal.append(x['description'])
 
     def createtext(self):
-        text='tommorrow\'s weather has a low of '
+        text='Tommorrow\'s weather has a low of '
         text=text+str(self.array['min'])+ ' degrees and a high of '
         text=text+str(self.array['max'])+ ' degrees with '
         if not self.abnormal:
