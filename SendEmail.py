@@ -1,7 +1,7 @@
 import ssl, smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-class emaill():
+class SendEmail():
     context= ssl.create_default_context()
     def __init__(self,wtext,passw,sender):
         self.text=wtext
