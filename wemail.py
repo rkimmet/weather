@@ -2,6 +2,7 @@ import SendEmail,weather
 
 def main():
         data=open('keys.txt','r').readlines()
+        data=open('keys.txt','r').readlines()
         sdata=[]
         for x in data:
             sdata.append(x.rstrip('\n'))

@@ -1,6 +1,6 @@
 import requests
 class getWeather():
-    params={'User-Agent':'SuperSimpleWeatherApp, littleproless@gmail.com'}
+    params={'q':'Indianapolis','units':'imperial'}
 
     #initialize the array
     def __init__(self):
@@ -9,7 +9,9 @@ class getWeather():
         self.abnormal=[]
     #grabs the weather data from the open weather api **future implementation** add feature to add own city by ID?
     def getreq(self):
-        r=requests.get("https://api.weather.gov/gridpoints/IND/58,71/forecast",headers=self.params)
+
+#        print(self.params)
+        r=requests.get("https://api.weather.gov",params=self.params)
         if(r.status_code!=requests.codes.ok):
             print(r.status_code)
             print("something went wrong")
