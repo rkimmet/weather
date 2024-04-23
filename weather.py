@@ -1,17 +1,15 @@
 import requests
 class getWeather():
-    params={'q':'Indianapolis','units':'imperial'}
+    params={'User-Agent':'SuperSimpleWeatherApp, littleproless@gmail.com'}
 
     #initialize the array
     def __init__(self):
         self.array={'min':0,'max':0}
         self.weathercode=[]
         self.abnormal=[]
-    #grabs the weather data from the NWS
+    #grabs the weather data from the open weather api **future implementation** add feature to add own city by ID?
     def getreq(self):
-
-#        print(self.params)
-        r=requests.get("https://api.weather.gov",params=self.params)
+        r=requests.get("https://api.weather.gov/gridpoints/IND/58,71/forecast",headers=self.params)
         if(r.status_code!=requests.codes.ok):
             print(r.status_code)
             print("something went wrong")
@@ -39,12 +37,10 @@ class getWeather():
     def getcode(self):
         for x in self.weathercode:
             if x['id']<800:
-                if x['description'] not in self.abnormal:
-                    print(self.abnormal)
-                    self.abnormal.append(x['description'])
+                self.abnormal.extend(x['description'])
 
     def createtext(self):
-        text='Tommorrow\'s weather has a low of '
+        text='tommorrow\'s weather has a low of '
         text=text+str(self.array['min'])+ ' degrees and a high of '
         text=text+str(self.array['max'])+ ' degrees with '
         if not self.abnormal:
