@@ -2,18 +2,16 @@ import SendEmail,weather
 
 def main():
         data=open('keys.txt','r').readlines()
-        data=open('keys.txt','r').readlines()
         sdata=[]
         for x in data:
             sdata.append(x.rstrip('\n'))
-#        print(sdata)
         weathr=weather.getWeather()
         forcast=weathr.getreq()
-        weathr.getcode()
-        text=weathr.createtext()
+        text=forcast['name']+'\n'+forcast['detailedForecast']
+        print(text)
         password=sdata[0]
         eserver=SendEmail.SendEmail(text,password,sdata[1])
 #        print('ok')
-        #eserver.sendmsg()
+        eserver.sendmsg()
 
 main()
